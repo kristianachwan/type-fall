@@ -1,10 +1,19 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,300;0,700;1,400&display=swap');
+
+#root { 
+  height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App {
+  text-align: center;
+  height: 100vh; 
+  position: relative; 
+  display: flex;
+  justify-content: center;
+}
+
+.title{ 
+  font-family: 'Bungee Shade', cursive;
 }
 
 @media (prefers-reduced-motion: no-preference) {
