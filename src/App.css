@@ -8,11 +8,17 @@
   text-align: center;
   height: 100vh; 
   position: relative; 
-
+  margin-top: 0 !important;
 }
 
 .title{ 
   font-family: 'Bungee Shade', cursive;
+}
+
+.title-layer{ 
+  margin-top: 0;
+  z-index: 1; 
+  background-color: white;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -26,10 +32,10 @@
 
 @keyframes letter-falling { 
   0% { 
-    bottom: 90vw;
+    bottom: 90vh;
   }
   100% { 
-    bottom: 10vw;
+    bottom: 10vh;
 
   }
 }
@@ -44,6 +50,8 @@
   padding: 5px 5px; 
   position: absolute;
   animation: letter-falling 10s linear; 
+  z-index: -1; 
+  bottom: 90vh;
 }
 
 
