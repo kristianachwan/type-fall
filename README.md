@@ -3,8 +3,8 @@
 
 ### General Overview: 
 
-This game is developed by Kristian Hadinata Achwan and Joshua James 
-Originally inspired by magic touch game, but this version involves the use of keyboard instead of touch-screen. 
+This game is developed by Kristian Hadinata Achwan and Joshua James,
+originally inspired by magic touch game, but this version involves the use of keyboard instead of touch-screen. 
 
 ### Tech Used: 
 
