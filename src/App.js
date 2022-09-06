@@ -5,7 +5,7 @@ import LetterComponent from './components/LetterComponent';
 import { randomLetter } from './functions/randomLetter';
 import { Container, Input } from '@mui/material';
 const barColorArray = [['#4caf50', '#66bb6a'], ['#ff9800', '#f57c00'], ['#bf360c', '#d84315'], [null, null]]
-const barLengthArray = [100, 60, 20, 0]
+
 
 // creating array of letters that are randomized in order (A-Z)
 
@@ -14,33 +14,45 @@ for (let i = 0; i < 26;) {
     let letter = randomLetter()
     let horizontalPos = Math.random() * 90
     if (!arr.includes(letter)) {
-        arr.push({ letter, pos: horizontalPos, status: 'NOT_DISPLAYED' })
+        arr.push({ letter, pos: horizontalPos, status: 'NOT_DISPLAYED'})
         i++
     }
 }
 function App() {
-
-
     const [barColor, setBarColor] = useState(barColorArray[0])
-    const [barLength, setBarLength] = useState(barLengthArray[1])
+    const [barLength, setBarLength] = useState(100)
     const [counter, setCounter] = useState(30)
     // set initially as a winning condition
     const [result, setResult] = useState('Congrats, you survive!')
     const [input, setInput] = useState('')
     const handleInput = (e) => {
-        set
+      setInput(e.target.value) 
+      e.target.value = ''
     } 
+
 
     useEffect(() => {
         // for timer 
         if (counter > 0) {
             setTimeout(() => {
                 setCounter(counter - 1);
-                arr[30 - counter].status = 'DISPLAYED';
+                if(30-counter > 0 && 30-counter < 26){
+                  arr[30 - counter].status = 'DISPLAYED';
+                }
             }, 1000)
         }
+
     }, [counter])
 
+    useEffect(() => {
+      arr.forEach((e, i) => {
+        if (e.letter == input){
+          e.status = 'NOT_DISPLAYED'
+        } 
+
+      })
+
+    }, [input])
     
 
 
@@ -53,9 +65,9 @@ function App() {
             </div>
             {/* <h1 variant="" className="letter">A</h1> */}
 
-            {arr && arr.map((letter, i) => {
+            {arr && arr.map((e, id) => {
                 return (
-                    <LetterComponent id={i} letter={letter.letter} xPosition={letter.pos} status={letter.status} />
+                    <LetterComponent id={id} letter={e.letter} xPosition={e.pos} status={e.status} setBarLength={setBarLength}/>
                 )
             })}
             <Input 
@@ -65,7 +77,7 @@ function App() {
                 onBlur={(e) => e.target.focus()}  
             />
 
-            <HealthBar barColor={barColor} barLength={barLength} />
+            <HealthBar barColor={barColor} barLength={barLength}/>
 
         </div>
     );

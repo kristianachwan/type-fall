@@ -7,13 +7,13 @@
     position: absolute;
     animation: letter-falling 10s linear;
     z-index: -1;
-    bottom: 90vh;
+    bottom: 100vh;
     background-color:white;
 }
 
 @keyframes letter-falling {
     0% {
-        bottom: 600px;
+        bottom: 650px;
     }
     100% {
         bottom: 100px;
