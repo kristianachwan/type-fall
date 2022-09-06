@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import HealthBar from './components/HealthBar';
 import { randomLetter } from './functions/randomLetter';
@@ -24,8 +24,11 @@ function App() {
   const [barLength, setBarLength] = useState(barLengthArray[1]) 
   const [counter, setCounter] = useState(30) 
   // set initially as a winning condition
-  const [result, setResult] = useState('Congrats, you survive!')
-  useEffect(() => {
+  const [result, setResult] = useState('Congrats, you survive!')  
+  const refForm = useRef() 
+
+  
+  useEffect(() => { 
     // for timer 
     if (counter > 0){
       setTimeout(() => setCounter(counter-1), 1000)
@@ -48,7 +51,7 @@ function App() {
           <h1 variant="" style={{ left: `${letter[1]}vw`, transformX: "translate(-50%)"}} className="letter" key={letter[1]}>{letter[0]}</h1>
         ) 
       })}
-      <Input className="input-letter" onChange={(e) => console.log(e.target.value)} onBlur={(e) => e.target.focus()}/>
+      <Input autoFocus ref={refForm} className="input-letter" onChange={(e) => console.log(e.target.value)} onBlur={(e) => e.target.focus()}/>
 
       <HealthBar barColor={barColor} barLength={barLength}/>
 
