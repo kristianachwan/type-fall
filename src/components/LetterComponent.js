@@ -8,7 +8,9 @@ function LetterComponent ({id, letter, xPosition, status, setBarLength}) {
     } else { 
         const elem = document.querySelector(`.letter-${id}`) 
         if (elem){
-            elem.addEventListener('animationend', function (event) {
+            elem.addEventListener('animationend', function (event) { 
+                // somehow it repeates 18 times everytime this function fires, so thats why I - 1 instead. 
+                // need to be fixed 
                 setBarLength((prevBarLength) => prevBarLength-1)
             });
         }
