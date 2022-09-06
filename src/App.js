@@ -13,7 +13,7 @@ for(let i = 0; i<26;){
   let letter = randomLetter()
   let horizontalPos = Math.random() * 101
   if (!arr.includes(letter)){
-    arr.push([letter, horizontalPos, false])
+    arr.push({letter, pos: horizontalPos, status: 'NOT_READY' })
     i++ 
   }
 }
@@ -48,7 +48,7 @@ function App() {
 
       {arr && arr.map(letter => {
         return (
-          <h1 variant="" style={{ left: `${letter[1]}vw`, transformX: "translate(-50%)"}} className="letter" key={letter[1]}>{letter[0]}</h1>
+          <h1 style={{ left: `${letter[1]}vw`, transformX: "translate(-50%)"}} className="letter" key={letter[1]}>{letter[0]}</h1>
         ) 
       })}
       <Input autoFocus ref={refForm} className="input-letter" onChange={(e) => console.log(e.target.value)} onBlur={(e) => e.target.focus()}/>
