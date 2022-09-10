@@ -7,10 +7,11 @@ import { Container, Input } from '@mui/material';
 const barColorArray = [['#4caf50', '#66bb6a'], ['#ff9800', '#f57c00'], ['#bf360c', '#d84315'], [null, null]]
 
 
-// creating array of letters that are randomized in order (A-Z)
+// creating array of letters that are randomized (A-Z)
 
 const InitializeLetters = () => {
-    let initLetters = []
+    let initLetters = [] 
+    // by default we initialize 52 letters 
     for (let i = 0; i < 52; i++) {
         let letter = randomLetter()
         let horizontalPos = Math.random() * 90
@@ -23,21 +24,29 @@ function App() {
     const [letters, setLetters] = useState([])
     const [barColor, setBarColor] = useState(barColorArray[0])
     const [barLength, setBarLength] = useState(100)
-    const [counter, setCounter] = useState(30)
-    const [currentLetter, setCurrentLetter] = useState(0);
+    const [counter, setCounter] = useState(30) 
+
+
+    // speed variable. Bigger = faster
+    let speed = 1;     
+
+    // current letter: number of letter that has been deployed 
+    const [currentLetter, setCurrentLetter] = useState(0); 
+
+    // result of the winner
     const [result, setResult] = useState('Congrats, you survive!')
-    const [input, setInput] = useState('')
+    const [input, setInput] = useState('') 
     const handleInput = (e) => {
         setInput(e.target.value)
         e.target.value = ''
     }
-
+    // initializing letter 
     useEffect(() => {
         if (!letters.length) {
             setLetters(InitializeLetters())
         }
     })
-
+    // for timer 
     useEffect(() => {
         if (counter > 0) {
             setTimeout(() => {
@@ -85,7 +94,16 @@ function App() {
 
             {letters && letters.map((e, id) => {
                 return (
-                    <LetterComponent id={id} letter={e.letter} xPosition={e.pos} status={e.status} setBarLength={setBarLength} />
+                    <LetterComponent 
+                        id={id} 
+                        letter={e.letter} 
+                        xPosition={e.pos} 
+                        status={e.status} 
+                        setBarLength={setBarLength} 
+                        speed={speed}
+
+
+                        />
                 )
             })}
             <Input
