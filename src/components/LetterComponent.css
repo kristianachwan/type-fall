@@ -5,7 +5,7 @@
     height: 50px;
     padding: 5px 5px;
     position: absolute;
-    animation: letter-falling 10s linear;
+    animation: letter-falling 3s linear;
     z-index: -1;
     bottom: 100vh;
     background-color:white;
