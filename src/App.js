@@ -9,51 +9,69 @@ const barColorArray = [['#4caf50', '#66bb6a'], ['#ff9800', '#f57c00'], ['#bf360c
 
 // creating array of letters that are randomized in order (A-Z)
 
-let arr = []
-for (let i = 0; i < 26;) {
-    let letter = randomLetter()
-    let horizontalPos = Math.random() * 90
-    if (!arr.includes(letter)) {
-        arr.push({ letter, pos: horizontalPos, status: 'NOT_DISPLAYED'})
-        i++
+const InitializeLetters = () => {
+    let initLetters = []
+    for (let i = 0; i < 52; i++) {
+        let letter = randomLetter()
+        let horizontalPos = Math.random() * 90
+        initLetters.push({ letter, pos: horizontalPos, status: 'NOT_DISPLAYED' })
     }
+    return initLetters
 }
+
 function App() {
+    const [letters, setLetters] = useState([])
     const [barColor, setBarColor] = useState(barColorArray[0])
     const [barLength, setBarLength] = useState(100)
     const [counter, setCounter] = useState(30)
-    // set initially as a winning condition
+    const [currentLetter, setCurrentLetter] = useState(0);
     const [result, setResult] = useState('Congrats, you survive!')
     const [input, setInput] = useState('')
     const handleInput = (e) => {
-      setInput(e.target.value) 
-      e.target.value = ''
-    } 
-
+        setInput(e.target.value)
+        e.target.value = ''
+    }
 
     useEffect(() => {
-        // for timer 
+        if (!letters.length) {
+            setLetters(InitializeLetters())
+        }
+    })
+
+    useEffect(() => {
         if (counter > 0) {
             setTimeout(() => {
                 setCounter(counter - 1);
-                if(30-counter > 0 && 30-counter < 26){
-                  arr[30 - counter].status = 'DISPLAYED';
-                }
-            }, 1000)
+            }, 1000);
         }
-
     }, [counter])
 
     useEffect(() => {
-      arr.forEach((e, i) => {
-        if (e.letter == input){
-          e.status = 'NOT_DISPLAYED'
-        } 
+        if (currentLetter < 52) {
+            setTimeout(() => {
+                let newLetters = letters.slice()
+                newLetters[currentLetter].status = 'DISPLAYED'
+                setLetters(newLetters)
+                setCurrentLetter(currentLetter + 1)
+            }, 500)
+        }
+    })
 
-      })
-
+    useEffect(() => {
+        if (input) {
+            let newLetters = letters.slice();
+            for(let i = 0; i < newLetters.length; i++) {
+                if(newLetters[i].letter === input.toUpperCase() && newLetters[i].status === 'DISPLAYED') {
+                    newLetters[i].status = 'NOT_DISPLAYED'
+                    break;
+                }
+            }
+            setLetters(newLetters.slice())
+            setInput('')
+            console.log(input.toUpperCase())
+        }
     }, [input])
-    
+
 
 
     return (
@@ -65,19 +83,19 @@ function App() {
             </div>
             {/* <h1 variant="" className="letter">A</h1> */}
 
-            {arr && arr.map((e, id) => {
+            {letters && letters.map((e, id) => {
                 return (
-                    <LetterComponent id={id} letter={e.letter} xPosition={e.pos} status={e.status} setBarLength={setBarLength}/>
+                    <LetterComponent id={id} letter={e.letter} xPosition={e.pos} status={e.status} setBarLength={setBarLength} />
                 )
             })}
-            <Input 
-                autoFocus 
-                className="input-letter" 
+            <Input
+                autoFocus
+                className="input-letter"
                 onChange={(e) => handleInput(e)}
-                onBlur={(e) => e.target.focus()}  
+                onBlur={(e) => e.target.focus()}
             />
 
-            <HealthBar barColor={barColor} barLength={barLength}/>
+            <HealthBar barColor={barColor} barLength={barLength} />
 
         </div>
     );
