@@ -4,7 +4,6 @@ import HealthBar from './components/HealthBar';
 import LetterComponent from './components/LetterComponent';
 import { randomLetter } from './functions/randomLetter';
 import { Container, Input } from '@mui/material';
-const barColorArray = [['#4caf50', '#66bb6a'], ['#ff9800', '#f57c00'], ['#bf360c', '#d84315'], [null, null]]
 
 
 // creating array of letters that are randomized (A-Z)
@@ -22,7 +21,6 @@ const InitializeLetters = () => {
 
 function App() {
     const [letters, setLetters] = useState([])
-    const [barColor, setBarColor] = useState(barColorArray[0])
     const [barLength, setBarLength] = useState(100)
     const [counter, setCounter] = useState(30) 
 
@@ -101,9 +99,7 @@ function App() {
                         status={e.status} 
                         setBarLength={setBarLength} 
                         speed={speed}
-
-
-                        />
+                    />
                 )
             })}
             <Input
@@ -113,7 +109,7 @@ function App() {
                 onBlur={(e) => e.target.focus()}
             />
 
-            <HealthBar barColor={barColor} barLength={barLength} />
+            <HealthBar barLength={barLength} />
 
         </div>
     );
