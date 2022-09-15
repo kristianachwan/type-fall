@@ -41,9 +41,6 @@ function App() {
     const [input, setInput] = useState('') 
     const [open, setOpen] = useState(true) 
     const [gameStart, setGameStart] = useState(false)
-  
-
-   
 
     const handleStart = () => {  
         setCounter(30)
@@ -61,13 +58,13 @@ function App() {
             
     } 
 
-    const startTimer = async () => { 
-        for(let i = 29; i--; i>=0){
-            setTimeout(() => setCounter(i), (30-i)*1000)
-        }
+    const startTimer = () => { 
+        for(let i = 30; i--; i>=0){
+            setTimeout(() => 
+                setCounter(i)
+            , (30-i)*1000)
+        }   
     }
-
-    // for modal open and close 
 
     const handleInput = (e) => {
         setInput(e.target.value)
@@ -77,31 +74,26 @@ function App() {
     }
 
 
-    // initialize randomized letter 
-    useEffect(() => { 
-        
-        if (gameStart && !letters.length) {
+    useEffect(() => {
+        if (!letters.length) {
             setLetters(InitializeLetters())
         }
     }, [gameStart])
 
 
     useEffect(() => {
-        if (gameStart)
-            if (currentLetter < 52) {
-                setTimeout(() => {
-                    let newLetters = letters.slice()
-                    newLetters[currentLetter].status = 'DISPLAYED'
-                    setLetters(newLetters)
-                    setCurrentLetter(currentLetter + 1)
-                }, 500)
-            }
+        if (currentLetter < 52) {
+            setTimeout(() => {
+                let newLetters = letters.slice()
+                newLetters[currentLetter].status = 'DISPLAYED'
+                setLetters(newLetters)
+                setCurrentLetter(currentLetter + 1)
+            }, 500)
+        }
     })
 
-
-    // to set up character killer event listener
     useEffect(() => {
-        if (input && gameStart) {
+        if (input) {
             let newLetters = letters.slice();
             for(let i = 0; i < newLetters.length; i++) {
                 if(newLetters[i].letter === input.toUpperCase() && newLetters[i].status === 'DISPLAYED') {
@@ -114,16 +106,6 @@ function App() {
             console.log(input.toUpperCase())
         }
     }, [input])
-
-    useEffect(() => { 
-        if (barLength <= 0){
-        handleStop()  
-    
-    }}, [barLength]) 
-   
-
-
-
     return (
         <div className="App">
             <Modal
@@ -161,7 +143,6 @@ function App() {
             />
 
             <HealthBar barColor={barColor} barLength={barLength} />
-
         </div>
     );
 }
