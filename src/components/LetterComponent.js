@@ -1,5 +1,4 @@
 import './LetterComponent.css'
-import { useRef } from 'react'
 function LetterComponent ({id, letter, xPosition, status, setBarLength}) { 
     
     
@@ -11,7 +10,7 @@ function LetterComponent ({id, letter, xPosition, status, setBarLength}) {
             elem.addEventListener('animationend', function (event) { 
                 // somehow it repeates 18 times everytime this function fires, so thats why I - 1 instead. 
                 // need to be fixed 
-                setBarLength((prevBarLength) => prevBarLength-1)
+                setBarLength((prevBarLength) => prevBarLength-0.1)
             });
         }
     

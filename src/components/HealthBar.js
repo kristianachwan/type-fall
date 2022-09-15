@@ -3,6 +3,7 @@ import { Container } from '@mui/system'
 import React from 'react'
 import './HealthBar.css'
 export default function HealthBar({barColor, barLength}) {
+  
   return (    
     <Box className="health-bar"  
         maxWidth="90vw"
