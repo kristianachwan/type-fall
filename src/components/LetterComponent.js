@@ -1,6 +1,6 @@
 import './LetterComponent.css'
-import { useRef } from 'react'
 function LetterComponent ({id, letter, xPosition, status, setBarLength, speed}) { 
+function LetterComponent ({id, letter, xPosition, status, setBarLength}) { 
     
     
     if(status != "DISPLAYED") {
