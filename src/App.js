@@ -47,7 +47,7 @@ function App() {
     const [showButton, setShowButton] = useState(false) 
 
     const handleRetry = () => { 
-        setCounter(30)
+     
         setBarLength(100)
         setCurrentLetter(0)  
         
@@ -59,31 +59,41 @@ function App() {
     } 
 
     const handleStart = () => {  
-        setCounter(30)
         startTimer() 
         setOpen(false)
         setGameStart(true) 
         // default value: the user wins the game 
         setResult('Congrats, you win!') 
         setLetters(InitializeLetters())
+
     } 
 
+    var intervalId; 
+
+
+    const startTimer = () => {   
+        // basically cleanup function for the previous one?  
+        setCounter(30)
+        let i = 29  
+        // for cleanup 
+        intervalId = setInterval(() => {
+            setCounter(i)
+            i--; 
+        } , 1000) 
+
+        window.intervalId = intervalId 
+
+        setTimeout(() => !gameStart ? setShowButton(true) : '', 31000)
+
+             
+    }
     const handleStop = () => {
         setGameStart(false)
         setResult('You lose') 
-        setShowButton(true)
+        setShowButton(true) 
+        setCounter(0)  
+        clearInterval(window.intervalId)
     } 
-
-    const startTimer = () => { 
-        for(let i = 30; i--; i>=0){
-            setTimeout(() => 
-                setCounter(i)
-            , (30-i)*1000)
-        }     
-        // if the timer finished, it means that the user has won (no interrupt from handleStop )
-        setTimeout(() => setShowButton(true), 31000)
-    }
-
     const handleInput = (e) => {
         setInput(e.target.value)
         console.log(e.target.value)
