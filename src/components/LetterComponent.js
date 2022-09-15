@@ -11,6 +11,7 @@ export default function LetterComponent ({id, letter, xPosition, status, setBarL
             elem.addEventListener('animationend', function (event) { 
                 // somehow it repeates 18 times everytime this function fires, so thats why I -0.1 instead. 
                 // need to be fixed 
+                console.log('test')
                 setBarLength((prevBarLength) => prevBarLength-0.1)
             });
         }
@@ -21,7 +22,8 @@ export default function LetterComponent ({id, letter, xPosition, status, setBarL
     return (
         <h1 
             key={id} 
-            style={{ left: `${xPosition}vw`, 
+            style={{ 
+                left: `${xPosition}vw`, 
                 transformX: "translate(-50%)",
                 animation: `letter-falling ${10/speed}s linear`
             }} 

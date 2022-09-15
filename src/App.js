@@ -35,7 +35,7 @@ function App() {
     const [barColor, setBarColor] = useState(barColorArray[0])
     const [barLength, setBarLength] = useState(100)  
     // custom speed 
-    let speed = 5
+    let speed = 1
     
     // for timer
     const [counter, setCounter] = useState(30)
@@ -45,20 +45,19 @@ function App() {
     const [open, setOpen] = useState(true) 
     const [gameStart, setGameStart] = useState(false)
     const [showButton, setShowButton] = useState(false) 
-    console.log(letters);
 
     const handleRetry = () => { 
         setCounter(30)
         setBarLength(100)
         setCurrentLetter(0)  
-        setLetters([])
+        
         // default value: the user wins the game 
         setResult('Congrats, you win!')         
         startTimer() 
-        setLetters(InitializeLetters())
         setGameStart(true) 
-
+        setLetters(InitializeLetters())
     } 
+
     const handleStart = () => {  
         setCounter(30)
         startTimer() 
@@ -107,6 +106,7 @@ function App() {
 
     }, [letters])
 
+    // event listener to 'kill' 
     useEffect(() => {
         if (gameStart) {
             let newLetters = letters.slice();
@@ -118,15 +118,16 @@ function App() {
             }
             setLetters(newLetters.slice())
             setInput('')
-            console.log(input.toUpperCase())
+            // console.log(input.toUpperCase())
         }
     }, [input, gameStart]) 
-
+    
     useEffect(() => {
         if (barLength <= 0){
             handleStop() 
         }
     }, [barLength])
+
     return (
         <div className="App">
             <Modal
@@ -147,8 +148,6 @@ function App() {
                 {gameStart && counter > 0 ? <h1>{counter} s</h1> : 
                     (<div>
                         <h1>{result}</h1>
-                        {/* <Button onClick={handleStart}>Retry</Button> */}
-                        {/* HandleStart should be generalized for retry  */} 
                         {showButton && <Button onClick={handleRetry}>Retry</Button>}
                     </div>)}
             </div>
@@ -177,5 +176,3 @@ export default App;
 // when we are able to 'kill' the letter OR the letter damages us, remove that element 
 
 
-// note: 
-// laggy timer in the first counter 
