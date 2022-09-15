@@ -33,7 +33,10 @@ const InitializeLetters = () => {
 function App() {
     const [letters, setLetters] = useState([])
     const [barColor, setBarColor] = useState(barColorArray[0])
-    const [barLength, setBarLength] = useState(100) 
+    const [barLength, setBarLength] = useState(100)  
+    // custom speed 
+    let speed = 5
+    
     // for timer
     const [counter, setCounter] = useState(30)
     const [currentLetter, setCurrentLetter] = useState(0);
@@ -41,21 +44,35 @@ function App() {
     const [input, setInput] = useState('') 
     const [open, setOpen] = useState(true) 
     const [gameStart, setGameStart] = useState(false)
+    const [showButton, setShowButton] = useState(false) 
+    console.log(letters);
 
+    const handleRetry = () => { 
+        setCounter(30)
+        setBarLength(100)
+        setCurrentLetter(0)  
+        setLetters([])
+        // default value: the user wins the game 
+        setResult('Congrats, you win!')         
+        startTimer() 
+        setLetters(InitializeLetters())
+        setGameStart(true) 
+
+    } 
     const handleStart = () => {  
         setCounter(30)
         startTimer() 
         setOpen(false)
         setGameStart(true) 
         // default value: the user wins the game 
-        setResult('Congrats, you win!')
-
+        setResult('Congrats, you win!') 
+        setLetters(InitializeLetters())
     } 
 
     const handleStop = () => {
         setGameStart(false)
         setResult('You lose') 
-            
+        setShowButton(true)
     } 
 
     const startTimer = () => { 
@@ -63,7 +80,9 @@ function App() {
             setTimeout(() => 
                 setCounter(i)
             , (30-i)*1000)
-        }   
+        }     
+        // if the timer finished, it means that the user has won (no interrupt from handleStop )
+        setTimeout(() => setShowButton(true), 31000)
     }
 
     const handleInput = (e) => {
@@ -74,15 +93,10 @@ function App() {
     }
 
 
-    useEffect(() => {
-        if (!letters.length) {
-            setLetters(InitializeLetters())
-        }
-    }, [gameStart])
 
-
+    // start to rain when letters are initialized 
     useEffect(() => {
-        if (currentLetter < 52) {
+        if (gameStart && currentLetter < 52) {
             setTimeout(() => {
                 let newLetters = letters.slice()
                 newLetters[currentLetter].status = 'DISPLAYED'
@@ -90,10 +104,11 @@ function App() {
                 setCurrentLetter(currentLetter + 1)
             }, 500)
         }
-    })
+
+    }, [letters])
 
     useEffect(() => {
-        if (input) {
+        if (gameStart) {
             let newLetters = letters.slice();
             for(let i = 0; i < newLetters.length; i++) {
                 if(newLetters[i].letter === input.toUpperCase() && newLetters[i].status === 'DISPLAYED') {
@@ -105,7 +120,13 @@ function App() {
             setInput('')
             console.log(input.toUpperCase())
         }
-    }, [input])
+    }, [input, gameStart]) 
+
+    useEffect(() => {
+        if (barLength <= 0){
+            handleStop() 
+        }
+    }, [barLength])
     return (
         <div className="App">
             <Modal
@@ -123,17 +144,17 @@ function App() {
             <div className="title-layer">
                 <h1 className="title">TYPING FALL</h1>
                 {/* <h3>Can you survive in 30s?</h3> */}
-                {gameStart ? <h1>{counter} s</h1> : 
+                {gameStart && counter > 0 ? <h1>{counter} s</h1> : 
                     (<div>
                         <h1>{result}</h1>
                         {/* <Button onClick={handleStart}>Retry</Button> */}
                         {/* HandleStart should be generalized for retry  */} 
-                        
+                        {showButton && <Button onClick={handleRetry}>Retry</Button>}
                     </div>)}
             </div>
             
             {gameStart && letters && letters.map((e, id) => (
-                    <LetterComponent key={id} id={id} letter={e.letter} xPosition={e.pos} status={e.status} setBarLength={setBarLength} />
+                    <LetterComponent speed={speed} key={id} id={id} letter={e.letter} xPosition={e.pos} status={e.status} setBarLength={setBarLength} />
                 ))}
 
             <Input
