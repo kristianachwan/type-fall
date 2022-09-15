@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/type-fall/static/css/main.51d64314.css",
+    "main.js": "/type-fall/static/js/main.22e642db.js",
+    "index.html": "/type-fall/index.html",
+    "main.51d64314.css.map": "/type-fall/static/css/main.51d64314.css.map",
+    "main.22e642db.js.map": "/type-fall/static/js/main.22e642db.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.51d64314.css",
+    "static/js/main.22e642db.js"
+  ]
+}
