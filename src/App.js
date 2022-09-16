@@ -122,7 +122,7 @@ function App() {
         if (gameStart) {
             let newLetters = letters.slice();
             for(let i = 0; i < newLetters.length; i++) {
-                if(newLetters[i].letter === input.toUpperCase() && newLetters[i].status === 'DISPLAYED') {
+                if(newLetters[i].letter === input && newLetters[i].status === 'DISPLAYED') {
                     newLetters[i].status = 'NOT_DISPLAYED'
                     break;
                 }
@@ -134,7 +134,7 @@ function App() {
     }, [input, gameStart]) 
     
     useEffect(() => {
-        if (barLength <= 0){
+        if (barLength <= 0 || counter<0){
             handleStop() 
         }
     }, [barLength])

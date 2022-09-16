@@ -11,7 +11,6 @@ export default function LetterComponent ({id, letter, xPosition, status, setBarL
             elem.addEventListener('animationend', function (event) { 
                 // somehow it repeates 18 times everytime this function fires, so thats why I -0.1 instead. 
                 // need to be fixed 
-                console.log('test')
                 setBarLength((prevBarLength) => prevBarLength-0.1)
             });
         }
