@@ -175,6 +175,7 @@ function App() {
                 autoFocus
                 className="input-letter"
                 onChange={(e) => handleInput(e)}
+                onBlur={e => e.target.focus()}
             />
 
             <HealthBar barColor={barColor} barLength={barLength} />
