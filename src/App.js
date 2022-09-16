@@ -3,7 +3,8 @@ import './App.css';
 import HealthBar from './components/HealthBar';
 import LetterComponent from './components/LetterComponent';
 import { randomLetter } from './functions/randomLetter';
-import { Input, Button, Modal, Box, Typography } from '@mui/material';
+import { Input, Button, Modal, Box, Typography, Link } from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub'; 
 
 const barColorArray = [['#4caf50', '#66bb6a'], ['#ff9800', '#f57c00'], ['#bf360c', '#d84315'], [null, null]]
 
@@ -153,7 +154,11 @@ function App() {
                 </Box>
             </Modal>
             <div className="title-layer">
-                <h1 className="title">TYPING FALL</h1>
+                <h1 className="title">TYPING FALL</h1> 
+                <Link href="https://github.com/kristianachwan/type-fall" target="_blank">
+                    <GitHubIcon />
+                </Link>
+                
                 {/* <h3>Can you survive in 30s?</h3> */}
                 {gameStart && counter > 0 ? <h1>{counter} s</h1> : 
                     (<div>
