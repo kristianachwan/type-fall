@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/type-fall/static/css/main.ce937645.css",
-    "main.js": "/type-fall/static/js/main.9823db9a.js",
+    "main.js": "/type-fall/static/js/main.c27d87c6.js",
     "index.html": "/type-fall/index.html",
     "main.ce937645.css.map": "/type-fall/static/css/main.ce937645.css.map",
-    "main.9823db9a.js.map": "/type-fall/static/js/main.9823db9a.js.map"
+    "main.c27d87c6.js.map": "/type-fall/static/js/main.c27d87c6.js.map"
   },
   "entrypoints": [
     "static/css/main.ce937645.css",
-    "static/js/main.9823db9a.js"
+    "static/js/main.c27d87c6.js"
   ]
 }
