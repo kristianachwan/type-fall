@@ -21,3 +21,7 @@
   background-color: white;
 }
 
+.input-letter {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}

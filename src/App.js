@@ -103,9 +103,9 @@ function App() {
     } 
     const handleInput = (e) => {
         setInput(e.target.value)
-        console.log(e.target.value)
-        // delay to e.target.value afterwards to be empty 
-        setTimeout(() => e.target.value='', 10)
+        // delay to e.target.value afterwards to be empty \
+        e.target.value=''
+
     }
 
 
@@ -133,24 +133,21 @@ function App() {
                 }
             }
             setLetters(newLetters.slice()) 
-            if (input != ''){
-                setInput('')
-
-            }
-            // console.log(input.toUpperCase())
+            setInput('')
+            
+            // console.log(input.toUpperCase()) 
         }
     }, [input, gameStart]) 
-    
     useEffect(() => {
         if (barLength <= 0 || counter<0){
             handleStop()  
             clearInterval(window.intervalId)
         }
     }, [barLength])
-    console.log(gameStart, counter); 
-    const ref = useRef() 
+    // console.log(gameStart, counter); 
+    
     return (
-        <div className="App" onHover={() => ref.current.focus()}>
+        <div className="App">
             <Modal
             open={open} // open state 
             aria-labelledby="modal-modal-title"
@@ -182,11 +179,13 @@ function App() {
                 ))}
 
             <Input 
-                ref={ref}
                 autoFocus
                 className="input-letter"
-                onChange={(e) => handleInput(e)}
-                onBlur={e => e.target.focus()}
+                onChange={(e) => handleInput(e)}  
+                onBlur={e => {  
+                    if(gameStart)
+                        e.target.focus()
+                }}  
             />
 
             <HealthBar barColor={barColor} barLength={barLength} />
