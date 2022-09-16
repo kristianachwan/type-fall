@@ -48,15 +48,18 @@ function App() {
     const [showButton, setShowButton] = useState(false) 
 
     const handleRetry = () => { 
-     
+        
         setBarLength(100)
         setCurrentLetter(0)  
         
         // default value: the user wins the game 
-        setResult('Congrats, you win!')         
+        setResult('Congrats, you win!') 
+        clearInterval(window.intervalId)
+        
         startTimer() 
-        setGameStart(true) 
-        setLetters(InitializeLetters())
+        setGameStart(true)  
+        setLetters(InitializeLetters()) 
+        
     } 
 
     const handleStart = () => {  
@@ -78,11 +81,15 @@ function App() {
         let i = 29  
         // for cleanup 
         intervalId = setInterval(() => {
-            setCounter(i)
-            i--; 
+            if(i > -1){
+                setCounter(i)
+                i--; 
+            } else{
+                clearInterval(clearInterval(intervalId))
+            }
+            
         } , 1000) 
-
-        window.intervalId = intervalId 
+        window.intervalId = intervalId
 
         setTimeout(() => !gameStart ? setShowButton(true) : '', 31000)
 
@@ -93,7 +100,6 @@ function App() {
         setResult('You lose') 
         setShowButton(true) 
         setCounter(0)  
-        clearInterval(window.intervalId)
     } 
     const handleInput = (e) => {
         setInput(e.target.value)
@@ -101,7 +107,6 @@ function App() {
         // delay to e.target.value afterwards to be empty 
         setTimeout(() => e.target.value='', 10)
     }
-
 
 
     // start to rain when letters are initialized 
@@ -127,20 +132,25 @@ function App() {
                     break;
                 }
             }
-            setLetters(newLetters.slice())
-            setInput('')
+            setLetters(newLetters.slice()) 
+            if (input != ''){
+                setInput('')
+
+            }
             // console.log(input.toUpperCase())
         }
     }, [input, gameStart]) 
     
     useEffect(() => {
         if (barLength <= 0 || counter<0){
-            handleStop() 
+            handleStop()  
+            clearInterval(window.intervalId)
         }
     }, [barLength])
-
+    console.log(gameStart, counter); 
+    const ref = useRef() 
     return (
-        <div className="App">
+        <div className="App" onHover={() => ref.current.focus()}>
             <Modal
             open={open} // open state 
             aria-labelledby="modal-modal-title"
@@ -171,7 +181,8 @@ function App() {
                     <LetterComponent speed={speed} key={id} id={id} letter={e.letter} xPosition={e.pos} status={e.status} setBarLength={setBarLength} />
                 ))}
 
-            <Input
+            <Input 
+                ref={ref}
                 autoFocus
                 className="input-letter"
                 onChange={(e) => handleInput(e)}
