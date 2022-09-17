@@ -98,7 +98,9 @@ function App() {
     const handleStop = () => {
         setGameStart(false)
         setResult('You lose') 
-        setShowButton(true) 
+        setShowButton(true)   
+        setLetters(letters.map(e => ({...e, status : "NOT_DISPLAYED"})))  
+        console.log(letters) 
         setCounter(0)  
     } 
     const handleInput = (e) => {
@@ -139,11 +141,10 @@ function App() {
         }
     }, [input, gameStart]) 
     useEffect(() => {
-        if (barLength <= 0 || counter<0){
+        if (barLength <= 0 || counter <=0){
             handleStop()  
-            clearInterval(window.intervalId)
         }
-    }, [barLength])
+    }, [barLength, counter])
     // console.log(gameStart, counter); 
     
     return (
