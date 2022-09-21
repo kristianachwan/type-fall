@@ -97,7 +97,6 @@ function App() {
     }
     const handleStop = () => {
         setGameStart(false)
-        setResult('You lose') 
         setShowButton(true)   
         setLetters(letters.map(e => ({...e, status : "NOT_DISPLAYED"})))  
         console.log(letters) 
@@ -142,6 +141,8 @@ function App() {
     }, [input, gameStart]) 
     useEffect(() => {
         if (barLength <= 0 || counter <=0){
+            if(barLength <= 0) 
+                setResult('You Lose')
             handleStop()  
         }
     }, [barLength, counter])
