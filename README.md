@@ -14,6 +14,6 @@ Falling alphabetical tiles, one must type it before it falls to the ground. This
 
 ### Improvements
 
-For any bugs and improvements, feel free to email `insert email here`. 
+For any bugs and improvements, feel free to email `kristianachwan@gmail.com`. 
 
 Cheers!
