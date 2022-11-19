@@ -4,7 +4,7 @@ import HealthBar from './components/HealthBar';
 import LetterComponent from './components/LetterComponent';
 import { randomLetter } from './functions/randomLetter';
 import { Input, Button, Modal, Box, Typography, Link } from '@mui/material';
-import GitHubIcon from '@mui/icons-material/GitHub'; 
+import GitHubIcon  from '@mui/icons-material/GitHub'; 
 
 const barColorArray = [['#4caf50', '#66bb6a'], ['#ff9800', '#f57c00'], ['#bf360c', '#d84315'], [null, null]]
 
@@ -36,7 +36,7 @@ function App() {
     const [barColor, setBarColor] = useState(barColorArray[0])
     const [barLength, setBarLength] = useState(100)  
     // custom speed 
-    let speed = 1
+    let speed = 3
     
     // for timer
     const [counter, setCounter] = useState(30)
@@ -69,7 +69,6 @@ function App() {
         // default value: the user wins the game 
         setResult('Congrats, you win!') 
         setLetters(InitializeLetters())
-
     } 
 
     var intervalId; 
@@ -92,8 +91,6 @@ function App() {
         window.intervalId = intervalId
 
         setTimeout(() => !gameStart ? setShowButton(true) : '', 31000)
-
-             
     }
     const handleStop = () => {
         setGameStart(false)
@@ -102,11 +99,11 @@ function App() {
         console.log(letters) 
         setCounter(0)  
     } 
+
     const handleInput = (e) => {
         setInput(e.target.value)
         // delay to e.target.value afterwards to be empty \
         e.target.value=''
-
     }
 
 
@@ -117,11 +114,23 @@ function App() {
                 let newLetters = letters.slice()
                 newLetters[currentLetter].status = 'DISPLAYED'
                 setLetters(newLetters)
+
+                setTimeout((i = currentLetter) => {
+                    if(checkStatus(i) == true) {
+                        setBarLength(barLength - 20);
+                    }
+                }, speed * 1000);
+                
                 setCurrentLetter(currentLetter + 1)
             }, 500)
         }
-
     }, [letters])
+
+    const checkStatus = (i) => {
+        if(letters[i].status === 'DISPLAYED')
+            return true;
+        return false;
+    }
 
     // event listener to 'kill' 
     useEffect(() => {
@@ -136,9 +145,10 @@ function App() {
             setLetters(newLetters.slice()) 
             setInput('')
             
-            // console.log(input.toUpperCase()) 
+            console.log(input.toUpperCase()) 
         }
     }, [input, gameStart]) 
+    
     useEffect(() => {
         if (barLength <= 0 || counter <=0){
             if(barLength <= 0) 
